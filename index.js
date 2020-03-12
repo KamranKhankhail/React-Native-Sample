@@ -17,12 +17,12 @@ function ViewContactItem(props) {
     item = {}, onPress, loading, loggedInUser = {}, isRadioVisible = false, onPressContact, friendId, onDeleteRequest, fetching
   } = props;
   const {
-    imageUrl, name, id: contactId, friend
+    picture, name, id: contactId, friend
   } = item;
   const { id: loggedInUserId = '' } = loggedInUser || {};
   const { id: requestFriendId = '', status, sender: requestSender = loggedInUserId } = friend || {};
   const activeOpacity = typeof onPress === 'function' ? 1 : 0.2;
-  const contactIcon = imageUrl ? { uri: imageUrl } : Images.defaultUser;
+  const contactIcon = picture ? { uri: picture } : Images.defaultUser;
 
   const isNotSelf = loggedInUserId !== contactId;
   const isSender = loggedInUserId === requestSender;
