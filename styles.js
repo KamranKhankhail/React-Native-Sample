@@ -11,6 +11,7 @@ export default StyleSheet.create({
   imageContainer: {
     width: moderateScale(50),
     height: moderateScale(50),
+    backgroundColor: AppStyles.colorSet.sea,
     borderRadius: moderateScale(50) / 2
   },
   placeholderStyle: {

@@ -22,7 +22,7 @@ function ViewContactItem(props) {
   const { id: loggedInUserId = '' } = loggedInUser || {};
   const { id: requestFriendId = '', status, sender: requestSender = loggedInUserId } = friend || {};
   const activeOpacity = typeof onPress === 'function' ? 1 : 0.2;
-  const contactIcon = picture ? { uri: picture } : Images.defaultUser;
+  const contactIcon = { uri: picture };
 
   const isNotSelf = loggedInUserId !== contactId;
   const isSender = loggedInUserId === requestSender;
@@ -49,7 +49,7 @@ function ViewContactItem(props) {
       <Image
         source={contactIcon}
         style={styles.imageContainer}
-        defaultSource={Images.defaultUser}
+        defaultSource={AppStyles.iconSet.profileFilled}
       />
       <Text style={[styles.nameStyle, props.nameStyle]}>{ name }</Text>
       { isRadioVisible && (
