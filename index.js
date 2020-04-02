@@ -5,7 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import { moderateScale } from 'react-native-size-matters';
 import styles from './styles';
-import { AppStyles, Images } from '../../themes';
+import { AppStyles } from '../../themes';
 import RadioButton from '../RadioButton/RadioButton';
 import { CustomButton } from '../index';
 import { getReqTitle } from '../../utils/sharedUtils';
@@ -22,7 +22,7 @@ function ViewContactItem(props) {
   const { id: loggedInUserId = '' } = loggedInUser || {};
   const { id: requestFriendId = '', status, sender: requestSender = loggedInUserId } = friend || {};
   const activeOpacity = typeof onPress === 'function' ? 1 : 0.2;
-  const contactIcon = { uri: picture };
+  const contactIcon = picture ? { uri: picture } : AppStyles.iconSet.profileFilled;
 
   const isNotSelf = loggedInUserId !== contactId;
   const isSender = loggedInUserId === requestSender;
