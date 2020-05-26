@@ -23,7 +23,6 @@ export default StyleSheet.create({
     marginLeft: scale(20),
     fontSize: AppStyles.fontSet.normal,
     color: AppStyles.colorSet.black,
-    fontFamily: AppStyles.fontFamily.corbelRegular
   },
   radioStyle: {
     width: moderateScale(30),
