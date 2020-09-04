@@ -60,7 +60,7 @@ function ViewContactItem(props) {
         color={AppStyles.colorSet.pinkI}
       />
       )}
-      {!isRadioVisible && isNotSelf && isNotFriend && isSender && (
+      {!isRadioVisible && isNotSelf && isSender && (
       <CustomButton
         size="small"
         hollow={!!friend && status !== FRIEND_STATUSES.DELETED}
