@@ -13,12 +13,13 @@ import { FRIEND_STATUSES } from '../../constants/constants'
 import PlaceholderItem from '../PlaceholderItem'
 import I18n from '../../I18n'
 import { logToConsole } from '../../utils/logUtils'
+import { navigateToUserProfile } from '../../utils/NavigationUtils'
 
 function ViewContactItem (props) {
   const {
-    item = {}, onPress, loading, loggedInUser = {}, isRadioVisible = false, onPressContact, friendId, onDeleteRequest, fetching
+    item = {}, onPress, loading, loggedInUser = {}, isRadioVisible = false, friendId, onDeleteRequest, fetching
   } = props
-  const { picture, name, id: contactId, friend } = item
+  const { picture, name, fullName, id: contactId, friend } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
   const { id: requestFriendId = '', status, sender: requestSender = loggedInUserId } = friend || {}
 
@@ -26,7 +27,10 @@ function ViewContactItem (props) {
   const contactIcon = picture ? { uri: picture } : AppStyles.iconSet.profileFilled
 
   const isNotSelf = loggedInUserId !== contactId
-  const isSender = loggedInUserId === requestSender
+
+  const onPressContact = () => {
+    navigateToUserProfile(item)
+  }
 
   const onPressRequest = () => {
 
@@ -45,7 +49,7 @@ function ViewContactItem (props) {
 
   return (
     <TouchableOpacity
-      onPress={() => onPressContact(item)}
+      onPress={onPressContact}
       style={styles.itemContainer}
       activeOpacity={activeOpacity}
     >
@@ -54,7 +58,7 @@ function ViewContactItem (props) {
         style={styles.imageContainer}
         defaultSource={AppStyles.iconSet.profileFilled}
       />
-      <Text style={[styles.nameStyle, props.nameStyle]}>{name}</Text>
+      <Text style={[styles.nameStyle, props.nameStyle]}>{name || fullName}</Text>
       {isRadioVisible && (
         <RadioButton
           isActive={props.isRadio}
@@ -68,7 +72,7 @@ function ViewContactItem (props) {
           size="small"
           hollow={isHollow}
           onPress={onPressRequest}
-          container={styles.followButtonContainer}
+          container={styles.followButton}
           loadingIndicatorColor={AppStyles.colorSet.pink}
           isLoading={(loading && String(friendId) === String(contactId))}
           title={I18n.t(title)}

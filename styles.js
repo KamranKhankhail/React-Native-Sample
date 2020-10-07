@@ -29,7 +29,7 @@ export default StyleSheet.create({
     height: moderateScale(30),
     backgroundColor: 'rgb(243,244,250)'
   },
-  followButtonContainer: {
+  followButton: {
     minWidth: MetricsMod.hundredTen,
     height: MetricsMod.twentyEight,
     borderWidth: 1,
