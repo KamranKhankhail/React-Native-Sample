@@ -1,23 +1,20 @@
-import React, { useState } from 'react'
-import {
-  Image, Text, TouchableOpacity, ViewPropTypes
-} from 'react-native'
+import React from 'react'
+import { Image, Text, TouchableOpacity, ViewPropTypes } from 'react-native'
 import PropTypes from 'prop-types'
 import { moderateScale } from 'react-native-size-matters'
 import styles from './styles'
 import { AppStyles } from '../../themes'
 import RadioButton from '../RadioButton/RadioButton'
 import { CustomButton } from '../index'
-import { getReqDetails, getReqTitle } from '../../utils/sharedUtils'
+import { getReqDetails } from '../../utils/sharedUtils'
 import { FRIEND_STATUSES } from '../../constants/constants'
 import PlaceholderItem from '../PlaceholderItem'
 import I18n from '../../I18n'
-import { logToConsole } from '../../utils/logUtils'
 import { navigateToUserProfile } from '../../utils/NavigationUtils'
 
-function ViewContactItem (props) {
+function ViewContactItem(props) {
   const {
-    item = {}, onPress, loading, loggedInUser = {}, isRadioVisible = false, friendId, onDeleteRequest, fetching
+    item = {}, onPress, loading, loggedInUser = {}, isRadioVisible = false, friendId, onDeleteRequest, fetching, onUnblockContact, onUnmuteAccount
   } = props
   const { picture, name, fullName, id: contactId, friend } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
@@ -33,16 +30,19 @@ function ViewContactItem (props) {
   }
 
   const onPressRequest = () => {
-
     if (!status || status === FRIEND_STATUSES.DELETED) {
       onPress(contactId)
     } else if (status === FRIEND_STATUSES.PENDING || status === FRIEND_STATUSES.FRIEND) {
       onDeleteRequest(requestFriendId, contactId)
+    } else if (status && status === FRIEND_STATUSES.UNBLOCK) {
+      onUnblockContact(contactId)
+    } else if (status && status === FRIEND_STATUSES.UNMUTE) {
+      onUnmuteAccount(contactId)
     }
   }
 
   if (fetching) {
-    return <PlaceholderItem/>
+    return <PlaceholderItem />
   }
 
   const { title, isHollow } = getReqDetails(status)
