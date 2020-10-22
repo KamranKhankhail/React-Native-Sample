@@ -18,7 +18,7 @@ function ViewContactItem(props) {
   } = props
   const { picture, name, fullName, id: contactId, friend } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
-  const { id: requestFriendId = '', status, sender: requestSender = loggedInUserId } = friend || {}
+  const { id: requestFriendId = '', status } = friend || {}
 
   const activeOpacity = typeof onPress === 'function' ? 1 : 0.2
   const contactIcon = picture ? { uri: picture } : AppStyles.iconSet.profileFilled
