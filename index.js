@@ -11,6 +11,7 @@ import { FRIEND_STATUSES } from '../../constants/constants'
 import PlaceholderItem from '../PlaceholderItem'
 import I18n from '../../I18n'
 import { navigateToUserProfile } from '../../utils/NavigationUtils'
+import FastImage from 'react-native-fast-image'
 
 function ViewContactItem(props) {
   const {
@@ -53,7 +54,7 @@ function ViewContactItem(props) {
       style={styles.itemContainer}
       activeOpacity={activeOpacity}
     >
-      <Image
+      <FastImage
         source={contactIcon}
         style={styles.imageContainer}
         defaultSource={AppStyles.iconSet.profileFilled}
