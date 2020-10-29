@@ -32,6 +32,7 @@ export default StyleSheet.create({
   followButton: {
     minWidth: MetricsMod.hundredTen,
     height: MetricsMod.twentyEight,
+    marginLeft: MetricsMod.smallMargin,
     borderWidth: 1,
     borderColor: AppStyles.colorSet.purple,
   },
