@@ -18,7 +18,7 @@ function ViewContactItem (props) {
   const {
     item = {}, onPress, loading, loggedInUser = {}, isRadioVisible = false, friendId, onDeleteRequest, fetching, onUnblockContact, onUnmuteAccount
   } = props
-  const { picture, name, fullName, id: contactId, friend } = item
+  const { picture, name, fullName, id: contactId, friend, follow } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
   const { id: requestFriendId = '', status } = friend || {}
 
@@ -47,7 +47,7 @@ function ViewContactItem (props) {
     return <PlaceholderItem/>
   }
 
-  const { title, isHollow } = getReqDetails(status)
+  const { title, isHollow } = getReqDetails(status, follow)
 
   return (
     <TouchableOpacity
