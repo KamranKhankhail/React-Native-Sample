@@ -76,7 +76,7 @@ function ViewContactItem (props) {
           container={styles.followButton}
           loadingIndicatorColor={AppStyles.colorSet.pink}
           isLoading={(loading && String(friendId) === String(contactId))}
-          title={I18n.t(title)}
+          title={title}
           backgroundColor={AppStyles.colorSet.purple}
         />
       )}
