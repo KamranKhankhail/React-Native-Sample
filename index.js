@@ -17,9 +17,7 @@ function ViewContactItem (props) {
   const { picture, name, fullName, id: contactId, friend, follow } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
   const { id: requestFriendId = '', status } = friend || {}
-
-  const contactIcon = { uri: picture }
-
+  const contactIcon = picture ? { uri: picture } : AppStyles.iconSet.profileFilled
   const isNotSelf = loggedInUserId !== contactId
 
   const onPressContact = () => {
