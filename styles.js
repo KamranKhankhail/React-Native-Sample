@@ -6,7 +6,8 @@ export default StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingBottom: moderateScale(24)
+    paddingBottom: moderateScale(24),
+    height: MetricsMod.seventyFive
   },
   imageContainer: {
     width: moderateScale(50),

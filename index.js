@@ -1,28 +1,24 @@
 import React from 'react'
-import { Image, Text, TouchableOpacity, ViewPropTypes } from 'react-native'
+import { Text, TouchableOpacity, ViewPropTypes } from 'react-native'
 import PropTypes from 'prop-types'
-import { moderateScale } from 'react-native-size-matters'
 import styles from './styles'
 import { AppStyles } from '../../themes'
-import RadioButton from '../RadioButton/RadioButton'
 import { CustomButton } from '../index'
 import { getReqDetails } from '../../utils/sharedUtils'
 import { FRIEND_STATUSES } from '../../constants/constants'
 import PlaceholderItem from '../PlaceholderItem'
-import I18n from '../../I18n'
-import { navigateToUserProfile } from '../../utils/NavigationUtils'
 import FastImage from 'react-native-fast-image'
 import { withNavigation } from 'react-navigation'
 
 function ViewContactItem (props) {
   const {
-    item = {}, onPress, loading, loggedInUser = {}, isRadioVisible = false, friendId, onDeleteRequest, fetching, onUnblockContact, onUnmuteAccount
+    item = {}, onPress, loading, loggedInUser = {}, friendId, onDeleteRequest, fetching, onUnblockContact, onUnmuteAccount
   } = props
   const { picture, name, fullName, id: contactId, friend, follow } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
   const { id: requestFriendId = '', status } = friend || {}
 
-  const contactIcon = picture ? { uri: picture } : AppStyles.iconSet.profileFilled
+  const contactIcon = { uri: picture }
 
   const isNotSelf = loggedInUserId !== contactId
 
@@ -60,15 +56,7 @@ function ViewContactItem (props) {
         defaultSource={AppStyles.iconSet.profileFilled}
       />
       <Text style={[styles.nameStyle, props.nameStyle]}>{name || fullName}</Text>
-      {isRadioVisible && (
-        <RadioButton
-          isActive={props.isRadio}
-          circleStyle={styles.radioStyle}
-          size={moderateScale(37)}
-          color={AppStyles.colorSet.pinkI}
-        />
-      )}
-      {!isRadioVisible && isNotSelf && (
+      {isNotSelf && (
         <CustomButton
           size="small"
           hollow={isHollow}
