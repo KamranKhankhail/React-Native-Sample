@@ -6,9 +6,9 @@ import { AppStyles } from '../../themes'
 import { CustomButton } from '../index'
 import { getReqDetails } from '../../utils/sharedUtils'
 import { FRIEND_STATUSES } from '../../constants/constants'
-import PlaceholderItem from '../PlaceholderItem'
 import FastImage from 'react-native-fast-image'
 import { withNavigation } from 'react-navigation'
+import PlaceholderContact from '../PlaceholderContact'
 
 function ViewContactItem (props) {
   const {
@@ -38,7 +38,7 @@ function ViewContactItem (props) {
   }
 
   if (fetching) {
-    return <PlaceholderItem/>
+    return <PlaceholderContact/>
   }
 
   const { title, isHollow } = getReqDetails(status, follow)
