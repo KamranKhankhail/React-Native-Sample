@@ -10,18 +10,21 @@ import PlaceholderItem from '../PlaceholderItem'
 import FastImage from 'react-native-fast-image'
 import { withNavigation } from 'react-navigation'
 
-function ViewContactItem (props) {
+function ViewContactItem(props) {
   const {
-    item = {}, onPress, loading, loggedInUser = {}, friendId, onDeleteRequest, fetching, onUnblockContact, onUnmuteAccount
+    item = {}, onPress, loading, loggedInUser = {}, friendId, onDeleteRequest = () => {}, fetching, onUnblockContact, onUnmuteAccount,
+    disabled = false
   } = props
-  const { picture, name, fullName, id: contactId, friend, follow } = item
+  const {
+    picture, name, fullName, id: contactId, friend, follow
+  } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
   const { id: requestFriendId = '', status } = friend || {}
   const contactIcon = picture ? { uri: picture } : AppStyles.iconSet.profileFilled
   const isNotSelf = loggedInUserId !== contactId
 
   const onPressContact = () => {
-    let screen = isNotSelf ? 'OtherUserProfile' : 'ProfileScreen'
+    const screen = isNotSelf ? 'OtherUserProfile' : 'ProfileScreen'
     props.navigation.push(screen, item)
   }
 
@@ -38,7 +41,7 @@ function ViewContactItem (props) {
   }
 
   if (fetching) {
-    return <PlaceholderItem/>
+    return <PlaceholderItem />
   }
 
   const { title, isHollow } = getReqDetails(status, follow)
@@ -47,6 +50,7 @@ function ViewContactItem (props) {
     <TouchableOpacity
       onPress={onPressContact}
       style={styles.itemContainer}
+      disabled={disabled}
     >
       <FastImage
         source={contactIcon}
