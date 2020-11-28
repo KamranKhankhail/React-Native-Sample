@@ -13,7 +13,7 @@ import PlaceholderContact from '../PlaceholderContact'
 function ViewContactItem(props) {
   const {
     item = {}, onPress, loading, loggedInUser = {}, friendId, onDeleteRequest = () => {}, fetching, onUnblockContact, onUnmuteAccount,
-    disabled = false
+    disabled = false, containerStyle, buttonContainer
   } = props
   const {
     picture, name, fullName, id: contactId, friend, follow
@@ -49,7 +49,7 @@ function ViewContactItem(props) {
   return (
     <TouchableOpacity
       onPress={onPressContact}
-      style={styles.itemContainer}
+      style={[styles.itemContainer, containerStyle]}
       disabled={disabled}
     >
       <FastImage
@@ -63,7 +63,7 @@ function ViewContactItem(props) {
           size="small"
           hollow={isHollow}
           onPress={onPressRequest}
-          container={styles.followButton}
+          container={[styles.followButton, buttonContainer]}
           loadingIndicatorColor={AppStyles.colorSet.pink}
           isLoading={(loading && String(friendId) === String(contactId))}
           title={title}
@@ -83,6 +83,8 @@ ViewContactItem.propTypes = {
   isRadio: PropTypes.bool,
   nameStyle: ViewPropTypes.style,
   onPressContact: PropTypes.func,
+  containerStyle: PropTypes.object,
+  buttonContainer: PropTypes.object,
 }
 
 ViewContactItem.defaultProps = {
@@ -91,5 +93,7 @@ ViewContactItem.defaultProps = {
   isRadioVisible: false,
   isRadio: false,
   nameStyle: {},
-  onPressContact: () => {}
+  onPressContact: () => {},
+  containerStyle: {},
+  buttonContainer: {},
 }
