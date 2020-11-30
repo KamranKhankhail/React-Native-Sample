@@ -13,7 +13,7 @@ import PlaceholderContact from '../PlaceholderContact'
 function ViewContactItem(props) {
   const {
     item = {}, onPress, loading, loggedInUser = {}, friendId, onDeleteRequest = () => {}, fetching, onUnblockContact, onUnmuteAccount,
-    disabled = false
+    disabled = false, isOnBoarding = false
   } = props
   const {
     picture, name, fullName, id: contactId, friend, follow
@@ -49,15 +49,15 @@ function ViewContactItem(props) {
   return (
     <TouchableOpacity
       onPress={onPressContact}
-      style={styles.itemContainer}
+      style={[styles.itemContainer, !isOnBoarding && styles.itemContainerI]}
       disabled={disabled}
     >
       <FastImage
         source={contactIcon}
-        style={styles.imageContainer}
+        style={[styles.imageContainer, isOnBoarding && styles.imageContainerI]}
         defaultSource={AppStyles.iconSet.profileFilled}
       />
-      <Text style={[styles.nameStyle, props.nameStyle]}>{name || fullName}</Text>
+      <Text style={[styles.nameStyle, props.nameStyle, !isOnBoarding && styles.nameStyleI]}>{name || fullName}</Text>
       {isNotSelf && (
         <CustomButton
           size="small"
@@ -68,6 +68,7 @@ function ViewContactItem(props) {
           isLoading={(loading && String(friendId) === String(contactId))}
           title={title}
           backgroundColor={AppStyles.colorSet.purple}
+          isOnBoarding={isOnBoarding}
         />
       )}
     </TouchableOpacity>
@@ -83,6 +84,7 @@ ViewContactItem.propTypes = {
   isRadio: PropTypes.bool,
   nameStyle: ViewPropTypes.style,
   onPressContact: PropTypes.func,
+  isOnBoarding: PropTypes.bool
 }
 
 ViewContactItem.defaultProps = {
@@ -91,5 +93,6 @@ ViewContactItem.defaultProps = {
   isRadioVisible: false,
   isRadio: false,
   nameStyle: {},
-  onPressContact: () => {}
+  onPressContact: () => {},
+  isOnBoarding: false,
 }
