@@ -68,7 +68,6 @@ function ViewContactItem(props) {
           isLoading={(loading && String(friendId) === String(contactId))}
           title={title}
           backgroundColor={AppStyles.colorSet.purple}
-          isOnBoarding={isOnBoarding}
         />
       )}
     </TouchableOpacity>
