@@ -13,7 +13,7 @@ import PlaceholderContact from '../PlaceholderContact'
 function ViewContactItem(props) {
   const {
     item = {}, onPress, loading, loggedInUser = {}, friendId, onDeleteRequest = () => {}, fetching, onUnblockContact, onUnmuteAccount,
-    disabled = false, containerStyle, buttonContainer
+    disabled = false, containerStyle, buttonContainer, isOnBoarding = false
   } = props
   const {
     picture, name, fullName, id: contactId, friend, follow
@@ -49,15 +49,15 @@ function ViewContactItem(props) {
   return (
     <TouchableOpacity
       onPress={onPressContact}
-      style={[styles.itemContainer, containerStyle]}
+      style={[styles.itemContainer, !isOnBoarding && styles.itemContainerI, containerStyle]}
       disabled={disabled}
     >
       <FastImage
         source={contactIcon}
-        style={styles.imageContainer}
+        style={[styles.imageContainer, isOnBoarding && styles.imageContainerI]}
         defaultSource={AppStyles.iconSet.profileFilled}
       />
-      <Text style={[styles.nameStyle, props.nameStyle]}>{name || fullName}</Text>
+      <Text style={[styles.nameStyle, props.nameStyle, !isOnBoarding && styles.nameStyleI]}>{name || fullName}</Text>
       {isNotSelf && (
         <CustomButton
           size="small"
@@ -83,6 +83,7 @@ ViewContactItem.propTypes = {
   isRadio: PropTypes.bool,
   nameStyle: ViewPropTypes.style,
   onPressContact: PropTypes.func,
+  isOnBoarding: PropTypes.bool,
   containerStyle: PropTypes.object,
   buttonContainer: PropTypes.object,
 }
@@ -96,4 +97,5 @@ ViewContactItem.defaultProps = {
   onPressContact: () => {},
   containerStyle: {},
   buttonContainer: {},
+  isOnBoarding: false,
 }

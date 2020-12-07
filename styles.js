@@ -6,12 +6,21 @@ export default StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingBottom: moderateScale(20),
+    // height: MetricsMod.seventyFive
+  },
+  itemContainerI: {
     paddingBottom: moderateScale(24),
-    height: MetricsMod.seventyFive
   },
   imageContainer: {
     width: moderateScale(50),
     height: moderateScale(50),
+    backgroundColor: AppStyles.colorSet.sea,
+    borderRadius: moderateScale(50) / 2
+  },
+  imageContainerI: {
+    width: moderateScale(40),
+    height: moderateScale(40),
     backgroundColor: AppStyles.colorSet.sea,
     borderRadius: moderateScale(50) / 2
   },
@@ -21,9 +30,11 @@ export default StyleSheet.create({
   },
   nameStyle: {
     flex: 1,
-    marginLeft: scale(20),
     fontSize: AppStyles.fontSet.normal,
     color: AppStyles.colorSet.black,
+  },
+  nameStyleI: {
+    marginLeft: scale(20),
   },
   radioStyle: {
     width: moderateScale(30),
