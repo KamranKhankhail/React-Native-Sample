@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native';
-import { moderateScale, scale } from 'react-native-size-matters';
+import { StyleSheet } from 'react-native'
+import { moderateScale, scale } from 'react-native-size-matters'
 import { AppStyles, MetricsMod } from '../../themes'
 
 export default StyleSheet.create({
@@ -22,7 +22,7 @@ export default StyleSheet.create({
     width: moderateScale(40),
     height: moderateScale(40),
     backgroundColor: AppStyles.colorSet.sea,
-    borderRadius: moderateScale(50) / 2
+    borderRadius: moderateScale(40) / 2,
   },
   placeholderStyle: {
     padding: moderateScale(10),
@@ -48,4 +48,4 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: AppStyles.colorSet.purple,
   },
-});
+})
