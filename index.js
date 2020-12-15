@@ -51,6 +51,7 @@ function ViewContactItem(props) {
       onPress={onPressContact}
       style={[styles.itemContainer, !isOnBoarding && styles.itemContainerI, containerStyle]}
       disabled={disabled}
+      key={contactId}
     >
       <FastImage
         source={contactIcon}
