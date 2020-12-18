@@ -10,16 +10,17 @@ import FastImage from 'react-native-fast-image'
 import { withNavigation } from 'react-navigation'
 import PlaceholderContact from '../PlaceholderContact'
 
-function ViewContactItem(props) {
+function ViewContactItem (props) {
   const {
     item = {}, onPress, loading, loggedInUser = {}, friendId, onDeleteRequest = () => {}, fetching, onUnblockContact, onUnmuteAccount,
-    disabled = false, containerStyle, buttonContainer, isOnBoarding = false
+    disabled = false, containerStyle, buttonContainer, isOnBoarding = false, isSelfFollowersTab = false
   } = props
   const {
     picture, name, fullName, id: contactId, friend, follow
   } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
   const { id: requestFriendId = '', status } = friend || {}
+  const { id: requestFollowId = '', status: followStatus } = follow || {}
   const contactIcon = picture ? { uri: picture } : AppStyles.iconSet.profileFilled
   const isNotSelf = loggedInUserId !== contactId
 
@@ -29,6 +30,9 @@ function ViewContactItem(props) {
   }
 
   const onPressRequest = () => {
+    if (isSelfFollowersTab) {
+      return onDeleteRequest(requestFollowId, contactId)
+    }
     if (!status || status === FRIEND_STATUSES.DELETED) {
       onPress(contactId)
     } else if (status === FRIEND_STATUSES.PENDING || status === FRIEND_STATUSES.FRIEND) {
@@ -44,7 +48,11 @@ function ViewContactItem(props) {
     return <PlaceholderContact/>
   }
 
-  const { title, isHollow } = getReqDetails(status, follow)
+  if (isSelfFollowersTab && followStatus !== FRIEND_STATUSES.FRIEND) {
+    return null
+  }
+
+  const { title, isHollow } = getReqDetails(status, follow, isSelfFollowersTab)
 
   return (
     <TouchableOpacity
