@@ -31,7 +31,7 @@ function ViewContactItem (props) {
 
   const onPressRequest = () => {
     if (isSelfFollowersTab) {
-      return onDeleteRequest(requestFollowId, contactId)
+      return onDeleteRequest(requestFollowId, contactId, item)
     }
     if (!status || status === FRIEND_STATUSES.DELETED) {
       onPress(contactId)
