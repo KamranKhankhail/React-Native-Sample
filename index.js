@@ -66,7 +66,7 @@ function ViewContactItem (props) {
         style={[styles.imageContainer, isOnBoarding && styles.imageContainerI]}
         defaultSource={AppStyles.iconSet.profileFilled}
       />
-      <Text style={[styles.nameStyle, props.nameStyle, !isOnBoarding && styles.nameStyleI]}>{name || fullName}</Text>
+      <Text style={[styles.nameStyle, props.nameStyle, !isOnBoarding && styles.nameStyleI]} numberOfLines={3}>{name || fullName}</Text>
       {isNotSelf && (
         <CustomButton
           size="small"
