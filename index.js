@@ -7,7 +7,7 @@ import { CustomButton } from '../index'
 import { getReqDetails } from '../../utils/sharedUtils'
 import { FRIEND_STATUSES } from '../../constants/constants'
 import FastImage from 'react-native-fast-image'
-import { withNavigation } from 'react-navigation'
+import { withNavigation } from '@react-navigation/compat'
 import PlaceholderContact from '../PlaceholderContact'
 
 function ViewContactItem (props) {
