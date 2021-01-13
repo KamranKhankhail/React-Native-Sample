@@ -13,7 +13,7 @@ import PlaceholderContact from '../PlaceholderContact'
 function ViewContactItem (props) {
   const {
     item = {}, onPress, loading, loggedInUser = {}, friendId, onDeleteRequest = () => {}, fetching, onUnblockContact, onUnmuteAccount,
-    disabled = false, containerStyle, buttonContainer, isOnBoarding = false, isSelfFollowersTab = false
+    disabled = false, containerStyle, buttonContainer, isOnBoarding = false, isSelfFollowersTab = false, isFollowAllowed = true
   } = props
   const {
     picture, name, fullName, id: contactId, friend, follow
@@ -66,8 +66,10 @@ function ViewContactItem (props) {
         style={[styles.imageContainer, isOnBoarding && styles.imageContainerI]}
         defaultSource={AppStyles.iconSet.profileFilled}
       />
-      <Text style={[styles.nameStyle, props.nameStyle, !isOnBoarding && styles.nameStyleI]} numberOfLines={3}>{name || fullName}</Text>
-      {isNotSelf && (
+      <Text style={[styles.nameStyle, props.nameStyle, !isOnBoarding && styles.nameStyleI]} numberOfLines={3}>
+        {name || fullName}
+      </Text>
+      {isNotSelf && isFollowAllowed && (
         <CustomButton
           size="small"
           hollow={isHollow}
