@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Text, TouchableOpacity, ViewPropTypes } from 'react-native'
 import PropTypes from 'prop-types'
 import styles from './styles'
@@ -7,7 +7,7 @@ import { CustomButton } from '../index'
 import { getReqDetails } from '../../utils/sharedUtils'
 import { FRIEND_STATUSES } from '../../constants/constants'
 import FastImage from 'react-native-fast-image'
-import { withNavigation } from '@react-navigation/compat'
+import { useNavigation } from '@react-navigation/native'
 import PlaceholderContact from '../PlaceholderContact'
 
 function ViewContactItem (props) {
@@ -15,9 +15,8 @@ function ViewContactItem (props) {
     item = {}, onPress, loading, loggedInUser = {}, friendId, onDeleteRequest = () => {}, fetching, onUnblockContact, onUnmuteAccount,
     disabled = false, containerStyle, buttonContainer, isOnBoarding = false, isSelfFollowersTab = false, isFollowAllowed = true
   } = props
-  const {
-    picture, name, fullName, id: contactId, friend, follow
-  } = item
+  const navigation = useNavigation()
+  const { picture, name, fullName, id: contactId, friend, follow } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
   const { id: requestFriendId = '', status } = friend || {}
   const { id: requestFollowId = '', status: followStatus } = follow || {}
@@ -26,7 +25,7 @@ function ViewContactItem (props) {
 
   const onPressContact = () => {
     const screen = isNotSelf ? 'OtherUserProfile' : 'ProfileScreen'
-    props.navigation.push(screen, item)
+    navigation.push(screen, item)
   }
 
   const onPressRequest = () => {
@@ -85,7 +84,20 @@ function ViewContactItem (props) {
   )
 }
 
-export default withNavigation(ViewContactItem)
+const arePropsEqual = (prevProps, nextProps) => {
+
+  if ((prevProps.loading !== nextProps.loading && String(nextProps?.item?.id) === String(nextProps.friendId)))
+    return false
+
+  return (
+    prevProps?.item === nextProps?.item &&
+    prevProps?.item?.follow?.status === nextProps?.item?.follow?.status &&
+    prevProps.disabled === nextProps.disabled &&
+    prevProps.fetching === nextProps.fetching
+  )
+}
+
+export default memo(ViewContactItem, arePropsEqual)
 
 ViewContactItem.propTypes = {
   item: PropTypes.object,
