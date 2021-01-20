@@ -8,13 +8,13 @@ import { getReqDetails } from '../../utils/sharedUtils'
 import { FRIEND_STATUSES } from '../../constants/constants'
 import FastImage from 'react-native-fast-image'
 import { useNavigation } from '@react-navigation/native'
-import PlaceholderContact from '../PlaceholderContact'
 
 function ViewContactItem (props) {
   const {
-    item = {}, onPress, loading, loggedInUser = {}, friendId, onDeleteRequest = () => {}, fetching, onUnblockContact, onUnmuteAccount,
-    disabled = false, containerStyle, buttonContainer, isOnBoarding = false, isSelfFollowersTab = false, isFollowAllowed = true
+    item = {}, onPress, onRemoveFollower, loading, loggedInUser = {}, friendId, onDeleteRequest, onUnblockContact, onUnmuteAccount,
+    disabled = false, containerStyle, buttonContainer, isOnBoarding = false, isSelfFollowersTab = false, isFollowAllowed = true, tabInfo
   } = props
+  const { TAB, currentTab, isRemoveAllowed } = tabInfo || {}
   const navigation = useNavigation()
   const { picture, name, fullName, id: contactId, friend, follow } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
@@ -29,8 +29,8 @@ function ViewContactItem (props) {
   }
 
   const onPressRequest = () => {
-    if (isSelfFollowersTab) {
-      return onDeleteRequest(requestFollowId, contactId, item)
+    if (isRemoveAllowed && currentTab === TAB.FOLLOWERS) {
+      return onRemoveFollower(item)
     }
     if (!status || status === FRIEND_STATUSES.DELETED) {
       onPress(contactId)
@@ -43,15 +43,11 @@ function ViewContactItem (props) {
     }
   }
 
-  if (fetching) {
-    return <PlaceholderContact/>
-  }
-
   if (isSelfFollowersTab && followStatus !== FRIEND_STATUSES.FRIEND) {
     return null
   }
 
-  const { title, isHollow } = getReqDetails(status, follow, isSelfFollowersTab)
+  const { title, isHollow } = getReqDetails(status, follow, tabInfo)
 
   return (
     <TouchableOpacity
@@ -91,9 +87,7 @@ const arePropsEqual = (prevProps, nextProps) => {
 
   return (
     prevProps?.item === nextProps?.item &&
-    prevProps?.item?.follow?.status === nextProps?.item?.follow?.status &&
-    prevProps.disabled === nextProps.disabled &&
-    prevProps.fetching === nextProps.fetching
+    prevProps.disabled === nextProps.disabled
   )
 }
 
