@@ -15,13 +15,13 @@ function ViewContactItem (props) {
     disabled = false, containerStyle, buttonContainer, isOnBoarding = false, isSelfFollowersTab = false, isFollowAllowed = true, tabInfo
   } = props
   const { TAB, currentTab, isRemoveAllowed } = tabInfo || {}
-  const navigation = useNavigation()
   const { picture, name, fullName, id: contactId, friend, follow } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
   const { id: requestFriendId = '', status } = friend || {}
   const { id: requestFollowId = '', status: followStatus } = follow || {}
   const contactIcon = picture ? { uri: picture } : AppStyles.iconSet.profileFilled
   const isNotSelf = loggedInUserId !== contactId
+  const navigation = useNavigation()
 
   const onPressContact = () => {
     const screen = isNotSelf ? 'OtherUserProfile' : 'ProfileScreen'
