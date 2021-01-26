@@ -30,16 +30,16 @@ function ViewContactItem (props) {
 
   const onPressRequest = () => {
     if (isRemoveAllowed && currentTab === TAB.FOLLOWERS) {
-      return onRemoveFollower(item)
+      return onRemoveFollower?.(item)
     }
     if (!status || status === FRIEND_STATUSES.DELETED) {
-      onPress(contactId)
+      onPress?.(contactId)
     } else if (status === FRIEND_STATUSES.PENDING || status === FRIEND_STATUSES.FRIEND) {
-      onDeleteRequest(requestFriendId, contactId)
+      onDeleteRequest?.(requestFriendId, contactId)
     } else if (status && status === FRIEND_STATUSES.UNBLOCK) {
-      onUnblockContact(contactId)
+      onUnblockContact?.(contactId)
     } else if (status && status === FRIEND_STATUSES.UNMUTE) {
-      onUnmuteAccount(contactId)
+      onUnmuteAccount?.(contactId)
     }
   }
 
