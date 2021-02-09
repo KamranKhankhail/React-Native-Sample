@@ -1,21 +1,40 @@
 import React, { memo } from 'react'
-import { Text, TouchableOpacity, ViewPropTypes } from 'react-native'
+import {
+  Text, TouchableOpacity, ViewPropTypes, View
+} from 'react-native'
 import PropTypes from 'prop-types'
 import styles from './styles'
-import { AppStyles } from '../../themes'
+import { AppStyles, MetricsMod } from '../../themes'
 import { CustomButton } from '../index'
 import { getReqDetails } from '../../utils/sharedUtils'
 import { FRIEND_STATUSES } from '../../constants/constants'
 import FastImage from 'react-native-fast-image'
 import { useNavigation } from '@react-navigation/native'
 
-function ViewContactItem (props) {
+function ViewContactItem(props) {
   const {
-    item = {}, onPress, onRemoveFollower, loading, loggedInUser = {}, friendId, onDeleteRequest, onUnblockContact, onUnmuteAccount,
-    disabled = false, containerStyle, buttonContainer, isOnBoarding = false, isSelfFollowersTab = false, isFollowAllowed = true, tabInfo
+    item = {},
+    onPress,
+    onRemoveFollower,
+    loading,
+    loggedInUser = {},
+    friendId,
+    onDeleteRequest,
+    onUnblockContact,
+    onUnmuteAccount,
+    disabled = false,
+    containerStyle,
+    buttonContainer,
+    isOnBoarding = false,
+    isSelfFollowersTab = false,
+    isFollowAllowed = true,
+    tabInfo,
+    subText
   } = props
   const { TAB, currentTab, isRemoveAllowed } = tabInfo || {}
-  const { picture, name, fullName, id: contactId, friend, follow } = item
+  const {
+    picture, name, fullName, id: contactId, friend, follow
+  } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
   const { id: requestFriendId = '', status } = friend || {}
   const { id: requestFollowId = '', status: followStatus } = follow || {}
@@ -61,9 +80,14 @@ function ViewContactItem (props) {
         style={[styles.imageContainer, isOnBoarding && styles.imageContainerI]}
         defaultSource={AppStyles.iconSet.profileFilled}
       />
-      <Text style={[styles.nameStyle, props.nameStyle, !isOnBoarding && styles.nameStyleI]} numberOfLines={3}>
-        {name || fullName}
-      </Text>
+      <View style={[styles.nameContainer, !isOnBoarding && styles.nameStyleI]}>
+        <Text style={[styles.nameStyle, props.nameStyle]} numberOfLines={3}>
+          {name || fullName}
+        </Text>
+        {!!subText && (
+        <Text numberOfLines={1} style={styles.subText}>{subText}</Text>
+        )}
+      </View>
       {isNotSelf && isFollowAllowed && (
         <CustomButton
           size="small"
@@ -81,13 +105,11 @@ function ViewContactItem (props) {
 }
 
 const arePropsEqual = (prevProps, nextProps) => {
-
-  if ((prevProps.loading !== nextProps.loading && String(nextProps?.item?.id) === String(nextProps.friendId)))
-    return false
+  if ((prevProps.loading !== nextProps.loading && String(nextProps?.item?.id) === String(nextProps.friendId))) return false
 
   return (
-    prevProps?.item === nextProps?.item &&
-    prevProps.disabled === nextProps.disabled
+    prevProps?.item === nextProps?.item
+    && prevProps.disabled === nextProps.disabled
   )
 }
 

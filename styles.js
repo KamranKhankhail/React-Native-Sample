@@ -28,13 +28,23 @@ export default StyleSheet.create({
     padding: moderateScale(10),
     backgroundColor: AppStyles.colorSet.greyishII
   },
-  nameStyle: {
+  nameContainer: {
+    justifyContent: 'center',
     flex: 1,
+  },
+  nameStyle: {
     fontSize: AppStyles.fontSet.normal,
     color: AppStyles.colorSet.black,
   },
   nameStyleI: {
     marginLeft: scale(20),
+  },
+  subText: {
+    fontWeight: '400',
+    fontSize: AppStyles.fontSet.xsmall,
+    lineHeight: MetricsMod.fifteen,
+    letterSpacing: 0.44,
+    color: AppStyles.colorSet.greyishXXI
   },
   radioStyle: {
     width: moderateScale(30),
