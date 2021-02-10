@@ -8,7 +8,9 @@ import { getReqDetails } from '../../utils/sharedUtils'
 import { FRIEND_STATUSES } from '../../constants/constants'
 import FastImage from 'react-native-fast-image'
 import { useNavigation } from '@react-navigation/native'
+import withPreventDoubleClick from '../../utils/withPreventDoubleClick'
 
+const TouchableOpacityD = withPreventDoubleClick(TouchableOpacity)
 function ViewContactItem (props) {
   const {
     item = {}, onPress, onRemoveFollower, loading, loggedInUser = {}, friendId, onDeleteRequest, onUnblockContact, onUnmuteAccount,
@@ -50,7 +52,7 @@ function ViewContactItem (props) {
   const { title, isHollow } = getReqDetails(status, follow, tabInfo)
 
   return (
-    <TouchableOpacity
+    <TouchableOpacityD
       onPress={onPressContact}
       style={[styles.itemContainer, !isOnBoarding && styles.itemContainerI, containerStyle]}
       disabled={disabled}
@@ -76,7 +78,7 @@ function ViewContactItem (props) {
           backgroundColor={AppStyles.colorSet.purple}
         />
       )}
-    </TouchableOpacity>
+    </TouchableOpacityD>
   )
 }
 
