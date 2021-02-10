@@ -8,6 +8,7 @@ import { getReqDetails } from '../../utils/sharedUtils'
 import { FRIEND_STATUSES } from '../../constants/constants'
 import FastImage from 'react-native-fast-image'
 import { useNavigation } from '@react-navigation/native'
+import { transformImage } from '../../utils/Transform'
 
 function ViewContactItem (props) {
   const {
@@ -18,8 +19,8 @@ function ViewContactItem (props) {
   const { picture, name, fullName, id: contactId, friend, follow } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
   const { id: requestFriendId = '', status } = friend || {}
-  const { id: requestFollowId = '', status: followStatus } = follow || {}
-  const contactIcon = picture ? { uri: picture } : AppStyles.iconSet.profileFilled
+  const { status: followStatus } = follow || {}
+  const contactIcon = picture ? { uri: transformImage(picture) } : AppStyles.iconSet.profileFilled
   const isNotSelf = loggedInUserId !== contactId
   const navigation = useNavigation()
 
