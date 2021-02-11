@@ -10,7 +10,10 @@ import { getReqDetails } from '../../utils/sharedUtils'
 import { FRIEND_STATUSES } from '../../constants/constants'
 import FastImage from 'react-native-fast-image'
 import { useNavigation } from '@react-navigation/native'
+import { transformImage } from '../../utils/Transform'
+import withPreventDoubleClick from '../../utils/withPreventDoubleClick'
 
+const TouchableOpacityD = withPreventDoubleClick(TouchableOpacity)
 function ViewContactItem(props) {
   const {
     item = {},
@@ -37,8 +40,8 @@ function ViewContactItem(props) {
   } = item
   const { id: loggedInUserId = '' } = loggedInUser || {}
   const { id: requestFriendId = '', status } = friend || {}
-  const { id: requestFollowId = '', status: followStatus } = follow || {}
-  const contactIcon = picture ? { uri: picture } : AppStyles.iconSet.profileFilled
+  const { status: followStatus } = follow || {}
+  const contactIcon = picture ? { uri: transformImage(picture) } : AppStyles.iconSet.profileFilled
   const isNotSelf = loggedInUserId !== contactId
   const navigation = useNavigation()
 
@@ -69,7 +72,7 @@ function ViewContactItem(props) {
   const { title, isHollow } = getReqDetails(status, follow, tabInfo)
 
   return (
-    <TouchableOpacity
+    <TouchableOpacityD
       onPress={onPressContact}
       style={[styles.itemContainer, !isOnBoarding && styles.itemContainerI, containerStyle]}
       disabled={disabled}
@@ -100,7 +103,7 @@ function ViewContactItem(props) {
           backgroundColor={AppStyles.colorSet.purple}
         />
       )}
-    </TouchableOpacity>
+    </TouchableOpacityD>
   )
 }
 
