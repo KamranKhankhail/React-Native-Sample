@@ -12,6 +12,7 @@ import FastImage from 'react-native-fast-image'
 import { useNavigation } from '@react-navigation/native'
 import { transformImage } from '../../utils/Transform'
 import withPreventDoubleClick from '../../utils/withPreventDoubleClick'
+import { printLogs } from '../../utils/logUtils'
 
 const TouchableOpacityD = withPreventDoubleClick(TouchableOpacity)
 function ViewContactItem(props) {
@@ -108,7 +109,12 @@ function ViewContactItem(props) {
 }
 
 const arePropsEqual = (prevProps, nextProps) => {
-  if ((prevProps.loading !== nextProps.loading && String(nextProps?.item?.id) === String(nextProps.friendId))) return false
+  String(nextProps?.item?.id) === String(nextProps.friendId) && printLogs({
+    c1: prevProps.loading !== nextProps.loading && String(nextProps?.item?.id) === String(nextProps.friendId),
+    c2: prevProps?.item === nextProps?.item,
+    c3: prevProps.disabled === nextProps.disabled,
+  })
+  if (prevProps.loading !== nextProps.loading && String(nextProps?.item?.id) === String(nextProps.friendId)) return false
 
   return (
     prevProps?.item === nextProps?.item
