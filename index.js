@@ -109,11 +109,6 @@ function ViewContactItem(props) {
 }
 
 const arePropsEqual = (prevProps, nextProps) => {
-  String(nextProps?.item?.id) === String(nextProps.friendId) && printLogs({
-    c1: prevProps.loading !== nextProps.loading && String(nextProps?.item?.id) === String(nextProps.friendId),
-    c2: prevProps?.item === nextProps?.item,
-    c3: prevProps.disabled === nextProps.disabled,
-  })
   if (prevProps.loading !== nextProps.loading && String(nextProps?.item?.id) === String(nextProps.friendId)) return false
 
   return (
