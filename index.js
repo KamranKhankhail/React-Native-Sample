@@ -47,8 +47,11 @@ function ViewContactItem(props) {
   const navigation = useNavigation()
 
   const onPressContact = () => {
-    const screen = isNotSelf ? 'OtherUserProfile' : 'ProfileScreen'
-    navigation.push(screen, item)
+    if (isNotSelf) {
+      navigation.push('OtherUserProfile', item)
+    } else {
+      navigation.push('ProfileTab', { screen: 'ProfileScreen', ...item })
+    }
   }
 
   const onPressRequest = () => {
