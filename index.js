@@ -1,10 +1,8 @@
 import React, { memo } from 'react'
-import {
-  Text, TouchableOpacity, ViewPropTypes, View
-} from 'react-native'
+import { Text, TouchableOpacity, View, ViewPropTypes } from 'react-native'
 import PropTypes from 'prop-types'
 import styles from './styles'
-import { AppStyles, MetricsMod } from '../../themes'
+import { AppStyles } from '../../themes'
 import { CustomButton } from '../index'
 import { getReqDetails } from '../../utils/sharedUtils'
 import { FRIEND_STATUSES } from '../../constants/constants'
@@ -12,9 +10,9 @@ import FastImage from 'react-native-fast-image'
 import { useNavigation } from '@react-navigation/native'
 import { transformImage } from '../../utils/Transform'
 import withPreventDoubleClick from '../../utils/withPreventDoubleClick'
-import { printLogs } from '../../utils/logUtils'
 
 const TouchableOpacityD = withPreventDoubleClick(TouchableOpacity)
+
 function ViewContactItem(props) {
   const {
     item = {},
@@ -33,7 +31,7 @@ function ViewContactItem(props) {
     isSelfFollowersTab = false,
     isFollowAllowed = true,
     tabInfo,
-    subText
+    subText,
   } = props
   const { TAB, currentTab, isRemoveAllowed } = tabInfo || {}
   const {
@@ -50,7 +48,7 @@ function ViewContactItem(props) {
     if (isNotSelf) {
       navigation.push('OtherUserProfile', item)
     } else {
-      navigation.push('ProfileTab', { screen: 'ProfileScreen', ...item })
+      navigation.navigate('ProfileScreen', item)
     }
   }
 
@@ -89,13 +87,13 @@ function ViewContactItem(props) {
       />
       <View style={[styles.nameContainer, !isOnBoarding && styles.nameStyleI]}>
         <Text style={[styles.nameStyle, props.nameStyle]} numberOfLines={3}>
-          {name || fullName}
+          { name || fullName }
         </Text>
-        {!!subText && (
-        <Text numberOfLines={1} style={styles.subText}>{subText}</Text>
-        )}
+        { !!subText && (
+          <Text numberOfLines={1} style={styles.subText}>{ subText }</Text>
+        ) }
       </View>
-      {isNotSelf && isFollowAllowed && (
+      { isNotSelf && isFollowAllowed && (
         <CustomButton
           size="small"
           hollow={isHollow}
@@ -106,7 +104,7 @@ function ViewContactItem(props) {
           title={title}
           backgroundColor={AppStyles.colorSet.purple}
         />
-      )}
+      ) }
     </TouchableOpacityD>
   )
 }
