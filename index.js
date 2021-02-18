@@ -46,7 +46,7 @@ function ViewContactItem(props) {
 
   const onPressContact = () => {
     if (isNotSelf) {
-      navigation.push('OtherUserProfile', item)
+      navigation.navigate('OtherUserProfile', item)
     } else {
       navigation.navigate('ProfileScreen', item)
     }
