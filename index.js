@@ -1,11 +1,13 @@
 import React, { memo } from 'react'
-import { Text, TouchableOpacity, View, ViewPropTypes } from 'react-native'
+import {
+  Text, TouchableOpacity, View, ViewPropTypes
+} from 'react-native'
 import PropTypes from 'prop-types'
 import styles from './styles'
 import { AppStyles } from '../../themes'
 import { CustomButton } from '../index'
 import { getReqDetails } from '../../utils/sharedUtils'
-import { FRIEND_STATUSES } from '../../constants/constants'
+import { FRIEND_STATUSES, IMAGE_CROP_OPTIONS } from '../../constants/constants'
 import FastImage from 'react-native-fast-image'
 import { useNavigation } from '@react-navigation/native'
 import { transformImage } from '../../utils/Transform'
@@ -40,7 +42,9 @@ function ViewContactItem(props) {
   const { id: loggedInUserId = '' } = loggedInUser || {}
   const { id: requestFriendId = '', status } = friend || {}
   const { status: followStatus } = follow || {}
-  const contactIcon = picture ? { uri: transformImage(picture) } : AppStyles.iconSet.profileFilled
+  const contactIcon = picture ? {
+    uri: transformImage(picture, 180, 180, false, 'png', 'image', IMAGE_CROP_OPTIONS.profile)
+  } : AppStyles.iconSet.profileFilled
   const isNotSelf = loggedInUserId !== contactId
   const navigation = useNavigation()
 
