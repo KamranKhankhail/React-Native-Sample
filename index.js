@@ -12,6 +12,7 @@ import FastImage from 'react-native-fast-image'
 import { useNavigation } from '@react-navigation/native'
 import { transformImage } from '../../utils/Transform'
 import withPreventDoubleClick from '../../utils/withPreventDoubleClick'
+import HighlightedText from '../HighlightedText'
 
 const TouchableOpacityD = withPreventDoubleClick(TouchableOpacity)
 
@@ -34,6 +35,7 @@ function ViewContactItem(props) {
     isFollowAllowed = true,
     tabInfo,
     subText,
+    search
   } = props
   const { TAB, currentTab, isRemoveAllowed } = tabInfo || {}
   const {
@@ -90,9 +92,9 @@ function ViewContactItem(props) {
         defaultSource={AppStyles.iconSet.profileFilled}
       />
       <View style={[styles.nameContainer, !isOnBoarding && styles.nameStyleI]}>
-        <Text style={[styles.nameStyle, props.nameStyle]} numberOfLines={3}>
+        <HighlightedText searchWords={[search]} style={[styles.nameStyle, props.nameStyle]} numberOfLines={3}>
           { name || fullName }
-        </Text>
+        </HighlightedText>
         { !!subText && (
           <Text numberOfLines={1} style={styles.subText}>{ subText }</Text>
         ) }
