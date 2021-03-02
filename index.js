@@ -32,7 +32,7 @@ function ViewContactItem(props) {
     buttonContainer,
     isOnBoarding = false,
     isSelfFollowersTab = false,
-    isFollowAllowed = true,
+    isFollowAllowed,
     tabInfo,
     subText,
     search
@@ -134,6 +134,7 @@ ViewContactItem.propTypes = {
   nameStyle: ViewPropTypes.style,
   onPressContact: PropTypes.func,
   isOnBoarding: PropTypes.bool,
+  isFollowAllowed: PropTypes.bool,
   containerStyle: PropTypes.object,
   buttonContainer: PropTypes.object,
 }
@@ -148,4 +149,5 @@ ViewContactItem.defaultProps = {
   containerStyle: {},
   buttonContainer: {},
   isOnBoarding: false,
+  isFollowAllowed: true,
 }
