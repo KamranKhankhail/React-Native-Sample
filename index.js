@@ -1,7 +1,5 @@
 import React, { memo } from 'react'
-import {
-  Text, TouchableOpacity, View, ViewPropTypes
-} from 'react-native'
+import { Text, TouchableOpacity, View, ViewPropTypes } from 'react-native'
 import PropTypes from 'prop-types'
 import styles from './styles'
 import { AppStyles } from '../../themes'
@@ -92,8 +90,8 @@ function ViewContactItem(props) {
         defaultSource={AppStyles.iconSet.profileFilled}
       />
       <View style={[styles.nameContainer, !isOnBoarding && styles.nameStyleI]}>
-        <HighlightedText searchWords={[search]} style={[styles.nameStyle, props.nameStyle]} numberOfLines={3}>
-          { name || fullName }
+        <HighlightedText searchWords={[search]} style={[styles.nameStyle, props?.nameStyle || {}]} numberOfLines={3}>
+          {name || fullName}
         </HighlightedText>
         { !!subText && (
           <Text numberOfLines={1} style={styles.subText}>{ subText }</Text>
