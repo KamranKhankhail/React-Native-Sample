@@ -1,5 +1,7 @@
 import React, { memo } from 'react'
-import { Text, TouchableOpacity, View, ViewPropTypes } from 'react-native'
+import {
+  Text, TouchableOpacity, View, ViewPropTypes
+} from 'react-native'
 import PropTypes from 'prop-types'
 import styles from './styles'
 import { AppStyles } from '../../themes'
