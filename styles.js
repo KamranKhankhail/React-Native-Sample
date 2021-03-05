@@ -9,6 +9,9 @@ export default StyleSheet.create({
     paddingBottom: moderateScale(20),
     // height: MetricsMod.seventyFive
   },
+  nameMainContainer: {
+    flex: 0,
+  },
   itemContainerI: {
     paddingBottom: moderateScale(24),
   },

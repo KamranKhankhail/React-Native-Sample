@@ -90,7 +90,7 @@ function ViewContactItem(props) {
         defaultSource={AppStyles.iconSet.profileFilled}
       />
       <View style={[styles.nameContainer, !isOnBoarding && styles.nameStyleI]}>
-        <HighlightedText searchWords={[search]} style={[styles.nameStyle, props?.nameStyle || {}]} numberOfLines={3}>
+        <HighlightedText mainContainerStyle={styles.nameMainContainer} searchWords={[search]} style={[styles.nameStyle, props?.nameStyle || {}]} numberOfLines={3}>
           {name || fullName}
         </HighlightedText>
         { !!subText && (
