@@ -7,10 +7,37 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingBottom: moderateScale(20),
-    // height: MetricsMod.seventyFive
   },
   nameMainContainer: {
     flex: 0,
+  },
+  roundItem: {
+    overflow: 'hidden',
+    alignItems: 'center',
+    flex: 1,
+    marginVertical: MetricsMod.baseMargin
+  },
+  roundImageContainer: {
+    margin: MetricsMod.baseMargin,
+    width: MetricsMod.eighty,
+    height: MetricsMod.eighty,
+    borderRadius: MetricsMod.eighty / 2,
+  },
+  roundUserImage: {
+    width: MetricsMod.eighty,
+    height: MetricsMod.eighty,
+    borderRadius: MetricsMod.eighty / 2,
+    resizeMode: 'cover',
+  },
+  roundFollowButton: {
+    position: 'absolute',
+    bottom: -5,
+    right: 0,
+  },
+  roundFollowIcon: {
+    width: MetricsMod.thirty,
+    height: MetricsMod.thirty,
+    borderRadius: MetricsMod.thirty / 2,
   },
   itemContainerI: {
     paddingBottom: moderateScale(24),
@@ -36,18 +63,20 @@ export default StyleSheet.create({
     flex: 1,
   },
   nameStyle: {
-    fontSize: AppStyles.fontSet.normal,
+    width: '100%',
+    fontSize: AppStyles.fontSet.mediumI,
     color: AppStyles.colorSet.black,
   },
   nameStyleI: {
     marginLeft: scale(20),
   },
   subText: {
+    textAlign: 'center',
     fontWeight: '400',
     fontSize: AppStyles.fontSet.xsmall,
     lineHeight: MetricsMod.fifteen,
     letterSpacing: 0.44,
-    color: AppStyles.colorSet.greyishXXI
+    color: AppStyles.colorSet.blackXXXX,
   },
   radioStyle: {
     width: moderateScale(30),
