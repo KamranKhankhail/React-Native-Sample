@@ -1,6 +1,6 @@
-import React, { memo, useMemo } from 'react'
+import React, { memo, useCallback, useMemo } from 'react'
 import {
-  Text, TouchableOpacity, View, ViewPropTypes, ActivityIndicator, Image
+  ActivityIndicator, Image, Text, TouchableOpacity, View, ViewPropTypes
 } from 'react-native'
 import PropTypes from 'prop-types'
 import styles from './styles'
@@ -38,7 +38,10 @@ function ViewContactItem(props) {
     subText,
     isRoundItem = false,
     search,
-    detailsContainerStyle
+    detailsContainerStyle,
+    isSelectUserFlow,
+    isSelected,
+    onSelectUser
   } = props
   const { TAB, currentTab, isRemoveAllowed } = tabInfo || {}
   const {
@@ -62,6 +65,9 @@ function ViewContactItem(props) {
   }
 
   const onPressRequest = () => {
+    if (isSelectUserFlow) {
+      return onSelectUser(item)
+    }
     if (isRemoveAllowed && currentTab === TAB.FOLLOWERS) {
       return onRemoveFollower?.(item)
     }
@@ -91,16 +97,36 @@ function ViewContactItem(props) {
         searchWords={[search]}
         style={[styles.nameStyle, isRoundItem && { textAlign: 'center' }, props?.nameStyle]}
         numberOfLines={isRoundItem ? 1 : 3}>
-        {name || fullName}
+        { name || fullName }
       </HighlightedText>
       { !!subText && (
         <Text numberOfLines={1} style={styles.subText}>{ subText }</Text>
       ) }
-      {!!followersCount && (
-        <Text numberOfLines={1} style={styles.subText}>{I18n.t('followedByDashPeople', { count: followersCount })}</Text>
+      { !!followersCount && (
+        <Text
+          numberOfLines={1}
+          style={styles.subText}>
+          { I18n.t('followedByDashPeople', { count: followersCount }) }
+        </Text>
       ) }
     </View>
   ), [search])
+
+  const renderActionIcon = useCallback(() => {
+    if (isLoading) {
+      return (
+        <View
+          style={[styles.roundFollowIcon, { backgroundColor: isHollow ? AppStyles.colorSet.white : AppStyles.colorSet.purple }]}>
+          <ActivityIndicator style={styles.roundFollowIcon} color={AppStyles.colorSet.pink} />
+        </View>
+      )
+    }
+    return (
+      <Image
+        source={status === FRIEND_STATUSES.FRIEND ? Images.purpleCircledTick : Images.greyCircledAdd}
+        style={styles.roundFollowIcon} />
+    )
+  }, [isLoading, isHollow, status])
 
   if (isRoundItem) {
     return (
@@ -110,25 +136,28 @@ function ViewContactItem(props) {
         disabled={disabled}
         key={contactId}
         activeOpacity={0.8}
-    >
+      >
         <View style={styles.roundImageContainer}>
           <FastImage source={contactIcon} style={styles.roundUserImage} />
-          <TouchableOpacityD
-            activeOpacity={0.8}
-            style={[styles.roundFollowButton, buttonContainer]}
-            onPress={onPressRequest}>
-            {isLoading ? (
-              <View style={[styles.roundFollowIcon, { backgroundColor: isHollow ? AppStyles.colorSet.white : AppStyles.colorSet.purple }]}>
-                <ActivityIndicator style={styles.roundFollowIcon} color={AppStyles.colorSet.pink} />
-              </View>
-            ) : (
+          { isSelectUserFlow ? (
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={[styles.roundFollowButton, buttonContainer]}
+              onPress={onPressRequest}>
               <Image
-                source={status === FRIEND_STATUSES.FRIEND ? Images.purpleCircledTick : Images.greyCircledAdd}
+                source={isSelected ? Images.purpleCircledTick : Images.greyCircledAdd}
                 style={styles.roundFollowIcon} />
-            )}
-          </TouchableOpacityD>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacityD
+              activeOpacity={0.8}
+              style={[styles.roundFollowButton, buttonContainer]}
+              onPress={onPressRequest}>
+              { renderActionIcon() }
+            </TouchableOpacityD>
+          ) }
         </View>
-        {renderContactDetails}
+        { renderContactDetails }
       </TouchableOpacityD>
     )
   }
@@ -146,8 +175,12 @@ function ViewContactItem(props) {
         defaultSource={AppStyles.iconSet.profileFilled}
       />
       <View style={[styles.nameContainer, !isOnBoarding && styles.nameStyleI]}>
-        <HighlightedText mainContainerStyle={styles.nameMainContainer} searchWords={[search]} style={[styles.nameStyle, props?.nameStyle || {}]} numberOfLines={3}>
-          {name || fullName}
+        <HighlightedText
+          mainContainerStyle={styles.nameMainContainer}
+          searchWords={[search]}
+          style={[styles.nameStyle, props?.nameStyle || {}]}
+          numberOfLines={3}>
+          { name || fullName }
         </HighlightedText>
         { !!subText && (
           <Text numberOfLines={1} style={styles.subText}>{ subText }</Text>
@@ -175,6 +208,7 @@ const arePropsEqual = (prevProps, nextProps) => {
   return (
     prevProps?.item === nextProps?.item
     && prevProps.disabled === nextProps.disabled
+    && prevProps.isSelected === nextProps.isSelected
   )
 }
 

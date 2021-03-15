@@ -15,7 +15,7 @@ export default StyleSheet.create({
     overflow: 'hidden',
     alignItems: 'center',
     flex: 1,
-    marginVertical: MetricsMod.baseMargin
+    marginVertical: MetricsMod.baseMargin,
   },
   roundImageContainer: {
     margin: MetricsMod.baseMargin,
@@ -24,20 +24,22 @@ export default StyleSheet.create({
     borderRadius: MetricsMod.eighty / 2,
   },
   roundUserImage: {
-    width: MetricsMod.eighty,
-    height: MetricsMod.eighty,
-    borderRadius: MetricsMod.eighty / 2,
+    width: MetricsMod.seventy,
+    height: MetricsMod.seventy,
+    borderRadius: MetricsMod.seventy / 2,
     resizeMode: 'cover',
   },
   roundFollowButton: {
     position: 'absolute',
-    bottom: -5,
-    right: 0,
+    bottom: 5,
+    right: 5,
   },
   roundFollowIcon: {
-    width: MetricsMod.thirty,
-    height: MetricsMod.thirty,
-    borderRadius: MetricsMod.thirty / 2,
+    width: MetricsMod.twentyFive,
+    height: MetricsMod.twentyFive,
+    borderRadius: MetricsMod.twentyFive / 2,
+    borderWidth: 1,
+    borderColor: AppStyles.colorSet.white
   },
   itemContainerI: {
     paddingBottom: moderateScale(24),
