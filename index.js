@@ -1,7 +1,5 @@
 import React, { memo, useMemo } from 'react'
-import {
-  Text, TouchableOpacity, View, ViewPropTypes, ActivityIndicator, Image
-} from 'react-native'
+import { ActivityIndicator, Image, Text, TouchableOpacity, View, ViewPropTypes } from 'react-native'
 import PropTypes from 'prop-types'
 import styles from './styles'
 import { AppStyles, Images } from '../../themes'
@@ -14,6 +12,7 @@ import { transformImage } from '../../utils/Transform'
 import withPreventDoubleClick from '../../utils/withPreventDoubleClick'
 import HighlightedText from '../HighlightedText'
 import I18n from '../../I18n'
+import { MAIN_SCREENS } from '../../constants'
 
 const TouchableOpacityD = withPreventDoubleClick(TouchableOpacity)
 
@@ -38,7 +37,9 @@ function ViewContactItem(props) {
     subText,
     isRoundItem = false,
     search,
-    detailsContainerStyle
+    detailsContainerStyle,
+    onLongPressItem,
+    isWithoutTabScreen
   } = props
   const { TAB, currentTab, isRemoveAllowed } = tabInfo || {}
   const {
@@ -54,6 +55,10 @@ function ViewContactItem(props) {
   const navigation = useNavigation()
 
   const onPressContact = () => {
+    if (isWithoutTabScreen) {
+      return onNavigateToWithoutTabScreens()
+    }
+
     if (isNotSelf) {
       navigation.navigate('OtherUserProfile', item)
     } else {
@@ -61,6 +66,13 @@ function ViewContactItem(props) {
     }
   }
 
+  const onNavigateToWithoutTabScreens = () => {
+    if (isNotSelf) {
+      return navigation.navigate(MAIN_SCREENS.OTHER_USER_PROFILE_WITHOUT_TABS, item)
+    }
+    return navigation.navigate(MAIN_SCREENS.PROFILE_WITHOUT_TABS, item)
+
+  }
   const onPressRequest = () => {
     if (isRemoveAllowed && currentTab === TAB.FOLLOWERS) {
       return onRemoveFollower?.(item)
@@ -139,6 +151,7 @@ function ViewContactItem(props) {
       style={[styles.itemContainer, !isOnBoarding && styles.itemContainerI, containerStyle]}
       disabled={disabled}
       key={contactId}
+      onLongPress={onLongPressItem}
     >
       <FastImage
         source={contactIcon}
@@ -187,8 +200,10 @@ ViewContactItem.propTypes = {
   isRadio: PropTypes.bool,
   nameStyle: ViewPropTypes.style,
   onPressContact: PropTypes.func,
+  onLongPressItem: PropTypes.func,
   isOnBoarding: PropTypes.bool,
   isFollowAllowed: PropTypes.bool,
+  isWithoutTabScreen: PropTypes.bool,
   containerStyle: PropTypes.object,
   buttonContainer: PropTypes.object,
   detailsContainerStyle: PropTypes.object,
@@ -201,9 +216,11 @@ ViewContactItem.defaultProps = {
   isRadio: false,
   nameStyle: {},
   onPressContact: () => {},
+  onLongPressItem: () => {},
   detailsContainerStyle: {},
   containerStyle: {},
   buttonContainer: {},
   isOnBoarding: false,
   isFollowAllowed: true,
+  isWithoutTabScreen: false,
 }
