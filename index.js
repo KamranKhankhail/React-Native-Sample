@@ -96,7 +96,7 @@ function ViewContactItem(props) {
         mainContainerStyle={styles.nameMainContainer}
         searchWords={[search]}
         style={[styles.nameStyle, isRoundItem && { textAlign: 'center' }, props?.nameStyle]}
-        numberOfLines={isRoundItem ? 1 : 3}>
+        numberOfLines={isRoundItem ? 2 : 3}>
         { name || fullName }
       </HighlightedText>
       { !!subText && (
@@ -105,8 +105,8 @@ function ViewContactItem(props) {
       { !!followersCount && (
         <Text
           numberOfLines={1}
-          style={styles.subText}>
-          { I18n.t('followedByDashPeople', { count: followersCount }) }
+          style={[styles.subText, props?.subTextStyle || {}]}>
+          {`${followersCount} Followers`}
         </Text>
       ) }
     </View>
@@ -137,7 +137,7 @@ function ViewContactItem(props) {
         key={contactId}
         activeOpacity={0.8}
       >
-        <View style={styles.roundImageContainer}>
+        <View style={[styles.roundImageContainer]}>
           <FastImage source={contactIcon} style={styles.roundUserImage} />
           { isSelectUserFlow ? (
             <TouchableOpacity
