@@ -41,7 +41,8 @@ function ViewContactItem(props) {
     detailsContainerStyle,
     isSelectUserFlow,
     isSelected,
-    onSelectUser
+    onSelectUser,
+    actionButtonTitle
   } = props
   const { TAB, currentTab, isRemoveAllowed } = tabInfo || {}
   const {
@@ -57,6 +58,9 @@ function ViewContactItem(props) {
   const navigation = useNavigation()
 
   const onPressContact = () => {
+    if (typeof props.onPressContact === 'function') {
+      return props.onPressContact(item)
+    }
     if (isNotSelf) {
       navigation.navigate('OtherUserProfile', item)
     } else {
@@ -88,7 +92,14 @@ function ViewContactItem(props) {
     return null
   }
 
-  const { title, isHollow } = getReqDetails(status, follow, tabInfo)
+  const getActionButtonTitle = () => {
+    if (actionButtonTitle) {
+      return { title: actionButtonTitle, isHollow: props.isHollow }
+    }
+    return getReqDetails(status, follow, tabInfo)
+  }
+
+  const { title, isHollow } = getActionButtonTitle()
 
   const renderContactDetails = useMemo(() => (
     <View style={[styles.nameContainer, !isOnBoarding && styles.nameStyleI, detailsContainerStyle]}>
@@ -106,7 +117,7 @@ function ViewContactItem(props) {
         <Text
           numberOfLines={1}
           style={[styles.subText, props?.subTextStyle || {}]}>
-          {`${followersCount} Followers`}
+          { `${followersCount} Followers` }
         </Text>
       ) }
     </View>
@@ -209,6 +220,7 @@ const arePropsEqual = (prevProps, nextProps) => {
     prevProps?.item === nextProps?.item
     && prevProps.disabled === nextProps.disabled
     && prevProps.isSelected === nextProps.isSelected
+    && prevProps.isHollow === nextProps.isHollow
   )
 }
 
