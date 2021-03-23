@@ -78,7 +78,7 @@ export default StyleSheet.create({
     fontSize: AppStyles.fontSet.xsmall,
     lineHeight: MetricsMod.fifteen,
     letterSpacing: 0.44,
-    color: AppStyles.colorSet.blackXXXX,
+    color: AppStyles.colorSet.blackN,
   },
   radioStyle: {
     width: moderateScale(30),
