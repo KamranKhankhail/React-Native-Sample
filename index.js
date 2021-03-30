@@ -261,7 +261,6 @@ ViewContactItem.defaultProps = {
   isRadioVisible: false,
   isRadio: false,
   nameStyle: {},
-  onPressContact: () => {},
   onLongPressItem: () => {},
   detailsContainerStyle: {},
   containerStyle: {},
