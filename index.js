@@ -1,6 +1,8 @@
 import React, { memo, useCallback, useMemo } from 'react'
 
-import { ActivityIndicator, Image, Text, TouchableOpacity, View, ViewPropTypes } from 'react-native'
+import {
+  ActivityIndicator, Image, Text, TouchableOpacity, View, ViewPropTypes
+} from 'react-native'
 
 import PropTypes from 'prop-types'
 import styles from './styles'
@@ -14,6 +16,7 @@ import { transformImage } from '../../utils/Transform'
 import withPreventDoubleClick from '../../utils/withPreventDoubleClick'
 import HighlightedText from '../HighlightedText'
 import { MAIN_SCREENS } from '../../constants'
+import { printLogs } from '../../utils/logUtils'
 
 const TouchableOpacityD = withPreventDoubleClick(TouchableOpacity)
 
@@ -60,6 +63,7 @@ function ViewContactItem(props) {
   const navigation = useNavigation()
 
   const onPressContact = () => {
+    printLogs({ onPressContact: props.onPressContact })
     if (typeof props.onPressContact === 'function') {
       return props.onPressContact(item)
     }
@@ -78,7 +82,6 @@ function ViewContactItem(props) {
       return navigation.navigate(MAIN_SCREENS.OTHER_USER_PROFILE_WITHOUT_TABS, item)
     }
     return navigation.navigate(MAIN_SCREENS.PROFILE_WITHOUT_TABS, item)
-
   }
   const onPressRequest = () => {
     if (isSelectUserFlow) {
@@ -261,7 +264,6 @@ ViewContactItem.defaultProps = {
   isRadioVisible: false,
   isRadio: false,
   nameStyle: {},
-  onPressContact: () => {},
   onLongPressItem: () => {},
   detailsContainerStyle: {},
   containerStyle: {},
