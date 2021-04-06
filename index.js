@@ -17,6 +17,7 @@ import withPreventDoubleClick from '../../utils/withPreventDoubleClick'
 import HighlightedText from '../HighlightedText'
 import { MAIN_SCREENS } from '../../constants'
 import { printLogs } from '../../utils/logUtils'
+import RadioButton from '../RadioButton/RadioButton'
 
 const TouchableOpacityD = withPreventDoubleClick(TouchableOpacity)
 
@@ -47,7 +48,9 @@ function ViewContactItem(props) {
     onSelectUser,
     actionButtonTitle,
     onLongPressItem,
-    isWithoutTabScreen
+    isWithoutTabScreen,
+    isRadio,
+    isRadioVisible
   } = props
   const { TAB, currentTab, isRemoveAllowed } = tabInfo || {}
   const {
@@ -63,7 +66,6 @@ function ViewContactItem(props) {
   const navigation = useNavigation()
 
   const onPressContact = () => {
-    printLogs({ onPressContact: props.onPressContact })
     if (typeof props.onPressContact === 'function') {
       return props.onPressContact(item)
     }
@@ -154,6 +156,33 @@ function ViewContactItem(props) {
     )
   }, [isLoading, isHollow, status])
 
+  const renderRadioButton = () => {
+    if (isRadio) {
+      return (
+        <RadioButton isActive={isRadioVisible} />
+      )
+    }
+    return null
+  }
+
+  const renderFollowButton = () => {
+    if (!isRadio && isNotSelf && isFollowAllowed) {
+      return (
+        <CustomButton
+          size="small"
+          hollow={isHollow}
+          onPress={onPressRequest}
+          container={[styles.followButton, buttonContainer]}
+          loadingIndicatorColor={AppStyles.colorSet.pink}
+          isLoading={isLoading}
+          title={title}
+          backgroundColor={AppStyles.colorSet.purple}
+      />
+      )
+    }
+    return null
+  }
+
   if (isRoundItem) {
     return (
       <TouchableOpacityD
@@ -213,18 +242,8 @@ function ViewContactItem(props) {
           <Text numberOfLines={1} style={styles.subText}>{ subText }</Text>
         ) }
       </View>
-      { isNotSelf && isFollowAllowed && (
-        <CustomButton
-          size="small"
-          hollow={isHollow}
-          onPress={onPressRequest}
-          container={[styles.followButton, buttonContainer]}
-          loadingIndicatorColor={AppStyles.colorSet.pink}
-          isLoading={isLoading}
-          title={title}
-          backgroundColor={AppStyles.colorSet.purple}
-        />
-      ) }
+      {renderRadioButton()}
+      {renderFollowButton()}
     </TouchableOpacityD>
   )
 }
@@ -237,6 +256,7 @@ const arePropsEqual = (prevProps, nextProps) => {
     && prevProps.disabled === nextProps.disabled
     && prevProps.isSelected === nextProps.isSelected
     && prevProps.isHollow === nextProps.isHollow
+    && prevProps.isRadioVisible === nextProps.isRadioVisible
   )
 }
 
