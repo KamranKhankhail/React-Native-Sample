@@ -6,7 +6,7 @@ import {
 
 import PropTypes from 'prop-types'
 import styles from './styles'
-import { AppStyles, Images } from '../../themes'
+import { AppStyles, Images, MetricsMod } from '../../themes'
 import { CustomButton } from '../index'
 import { getReqDetails } from '../../utils/sharedUtils'
 import { FRIEND_STATUSES, IMAGE_CROP_OPTIONS } from '../../constants/constants'
@@ -64,6 +64,7 @@ function ViewContactItem(props) {
   } : Images.defaultUser
   const isNotSelf = loggedInUserId !== contactId
   const navigation = useNavigation()
+  const ButtonComponent = isRadio ? TouchableOpacity : TouchableOpacityD
 
   const onPressContact = () => {
     if (typeof props.onPressContact === 'function') {
@@ -159,7 +160,10 @@ function ViewContactItem(props) {
   const renderRadioButton = () => {
     if (isRadio) {
       return (
-        <RadioButton isActive={isRadioVisible} />
+        <RadioButton
+          isActive={isRadioVisible}
+          size={MetricsMod.section}
+        />
       )
     }
     return null
@@ -218,7 +222,7 @@ function ViewContactItem(props) {
   }
 
   return (
-    <TouchableOpacityD
+    <ButtonComponent
       onPress={onPressContact}
       style={[styles.itemContainer, !isOnBoarding && styles.itemContainerI, containerStyle]}
       disabled={disabled}
@@ -244,7 +248,7 @@ function ViewContactItem(props) {
       </View>
       {renderRadioButton()}
       {renderFollowButton()}
-    </TouchableOpacityD>
+    </ButtonComponent>
   )
 }
 
@@ -275,7 +279,7 @@ ViewContactItem.propTypes = {
   isWithoutTabScreen: PropTypes.bool,
   containerStyle: PropTypes.object,
   buttonContainer: PropTypes.object,
-  detailsContainerStyle: PropTypes.object,
+  detailsContainerStyle: PropTypes.object
 }
 
 ViewContactItem.defaultProps = {
@@ -290,5 +294,5 @@ ViewContactItem.defaultProps = {
   buttonContainer: {},
   isOnBoarding: false,
   isFollowAllowed: true,
-  isWithoutTabScreen: false,
+  isWithoutTabScreen: false
 }
