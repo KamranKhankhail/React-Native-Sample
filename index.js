@@ -135,7 +135,7 @@ function ViewContactItem(props) {
         <Text
           numberOfLines={1}
           style={[styles.subText, props?.subTextStyle || {}]}>
-          { `${followersCount} Followers` }
+          { `Followed by ${followersCount} people` }
         </Text>
       ) }
     </View>
@@ -157,7 +157,7 @@ function ViewContactItem(props) {
     )
   }, [isLoading, isHollow, status])
 
-  const renderRadioButton = () => {
+  const renderRadioButton = useMemo(() => {
     if (isRadio) {
       return (
         <RadioButton
@@ -167,9 +167,9 @@ function ViewContactItem(props) {
       )
     }
     return null
-  }
+  }, [isRadioVisible])
 
-  const renderFollowButton = () => {
+  const renderFollowButton = useMemo(() => {
     if (!isRadio && isNotSelf && isFollowAllowed) {
       return (
         <CustomButton
@@ -185,7 +185,7 @@ function ViewContactItem(props) {
       )
     }
     return null
-  }
+  }, [isLoading, isHollow, title])
 
   if (isRoundItem) {
     return (
@@ -234,20 +234,9 @@ function ViewContactItem(props) {
         style={[styles.imageContainer, isOnBoarding && styles.imageContainerI]}
         defaultSource={AppStyles.iconSet.profileFilled}
       />
-      <View style={[styles.nameContainer, !isOnBoarding && styles.nameStyleI]}>
-        <HighlightedText
-          mainContainerStyle={styles.nameMainContainer}
-          searchWords={[search]}
-          style={[styles.nameStyle, props?.nameStyle || {}]}
-          numberOfLines={3}>
-          { name || fullName }
-        </HighlightedText>
-        { !!subText && (
-          <Text numberOfLines={1} style={styles.subText}>{ subText }</Text>
-        ) }
-      </View>
-      {renderRadioButton()}
-      {renderFollowButton()}
+      {renderContactDetails}
+      {renderRadioButton}
+      {renderFollowButton}
     </ButtonComponent>
   )
 }
