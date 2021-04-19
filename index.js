@@ -16,7 +16,6 @@ import { transformImage } from '../../utils/Transform'
 import withPreventDoubleClick from '../../utils/withPreventDoubleClick'
 import HighlightedText from '../HighlightedText'
 import { MAIN_SCREENS } from '../../constants'
-import { printLogs } from '../../utils/logUtils'
 import RadioButton from '../RadioButton/RadioButton'
 
 const TouchableOpacityD = withPreventDoubleClick(TouchableOpacity)
